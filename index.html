@@ -422,6 +422,42 @@ section { position: relative; z-index: 1; }
 .compat-item-plus .ci-icon { font-size: 22px; color: var(--cyan); font-family: var(--fd); }
 .compat-item-plus .ci-label { color: var(--cyan); }
 
+/* ── ROADMAP ── */
+.roadmap { padding: 120px 72px; border-top: 1px solid var(--bd); }
+.rm-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+}
+.rm-card {
+  background: var(--bgc);
+  border: 1px solid var(--bd);
+  padding: 36px 28px;
+  display: flex; flex-direction: column; gap: 16px;
+  transition: border-color .3s;
+}
+.rm-card:hover { border-color: var(--bdb); }
+.rm-tag {
+  display: inline-flex;
+  font-family: var(--fm); font-size: 10px;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--gold); background: var(--gold-dim);
+  border: 1px solid rgba(240,180,41,0.2);
+  padding: 4px 10px; border-radius: 2px;
+  width: fit-content;
+}
+.rm-tag-next {
+  color: var(--cyan);
+  background: rgba(34,211,238,0.08);
+  border-color: rgba(34,211,238,0.2);
+}
+.rm-icon { font-size: 28px; }
+.rm-title {
+  font-family: var(--fd);
+  font-size: 22px; line-height: 1.1; color: var(--tx);
+}
+.rm-body { font-size: 13px; color: var(--txm); line-height: 1.6; }
+
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
   /* Globals */
@@ -468,6 +504,12 @@ section { position: relative; z-index: 1; }
   .sens-card { padding: 20px 16px; }
   .sens-name { font-size: 17px; }
 
+  /* Roadmap */
+  .roadmap { padding: 64px 20px; }
+  .rm-grid { grid-template-columns: 1fr 1fr; gap: 2px; }
+  .rm-card { padding: 24px 20px; gap: 12px; }
+  .rm-title { font-size: 18px; }
+
   /* Compat */
   .compat-body { font-size: 15px; margin-bottom: 32px; }
   .compat-items { gap: 6px; }
@@ -513,6 +555,7 @@ section { position: relative; z-index: 1; }
 @media (max-width: 420px) {
   .flow-steps { grid-template-columns: 1fr; }
   .bnums { grid-template-columns: 1fr; }
+  .rm-grid { grid-template-columns: 1fr; }
   .hero-stats { gap: 16px; }
   .hstat { flex-direction: row; align-items: baseline; gap: 8px; }
   .compat-item { min-width: calc(50% - 4px); }
@@ -880,6 +923,40 @@ section { position: relative; z-index: 1; }
         <div class="bnum-big">Patente</div>
         <div class="bnum-sm">INPI depositada. Tecnologia proprietária Live Equipamentos.</div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="roadmap">
+  <div class="slabel reveal"><span>07</span> — Em desenvolvimento</div>
+  <h2 class="section-title reveal" style="margin-bottom:64px">
+    O que vem a seguir.
+  </h2>
+  <div class="rm-grid">
+    <div class="rm-card reveal">
+      <div class="rm-tag">Validação em curso</div>
+      <div class="rm-icon">👥</div>
+      <div class="rm-title">Multi-pessoa em tempo real</div>
+      <div class="rm-body">Uma câmera rastreia simultaneamente todos os alunos em uma zona da sala — cada um com seus dados individuais de movimento, ângulos e execução. Em fase de testes.</div>
+    </div>
+    <div class="rm-card reveal" style="transition-delay:.1s">
+      <div class="rm-tag">Validação em curso</div>
+      <div class="rm-icon">📡</div>
+      <div class="rm-title">Câmera por zona da sala</div>
+      <div class="rm-body">Definição do modelo ideal de cobertura: câmera por área (leg press, cardio, funcional) vs. câmera por aparelho. Testes práticos determinam a configuração com melhor custo-benefício.</div>
+    </div>
+    <div class="rm-card reveal" style="transition-delay:.2s">
+      <div class="rm-tag rm-tag-next">Próxima fase</div>
+      <div class="rm-icon">⚡</div>
+      <div class="rm-title">Sensores IoT nos aparelhos</div>
+      <div class="rm-body">Sensores de vibração, temperatura e ciclos de uso instalados em cada máquina. O sistema prevê falhas com dias de antecedência e agenda manutenção automaticamente — antes de o aparelho quebrar.</div>
+    </div>
+    <div class="rm-card reveal" style="transition-delay:.3s">
+      <div class="rm-tag rm-tag-next">Próxima fase</div>
+      <div class="rm-icon">🔗</div>
+      <div class="rm-title">API aberta para gestão</div>
+      <div class="rm-body">Integração nativa com plataformas de gestão de academia — dados biomecânicos, ocupação e manutenção disponíveis diretamente no sistema que a academia já usa, sem troca de software.</div>
     </div>
   </div>
 </section>
