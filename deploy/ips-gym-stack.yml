@@ -15,7 +15,7 @@ services:
         - traefik.http.routers.ips-gym.rule=Host(`ipsbiomecanic.liveuni.com.br`)
         - traefik.http.routers.ips-gym.entrypoints=websecure
         - traefik.http.routers.ips-gym.tls=true
-        - traefik.http.routers.ips-gym.tls.certresolver=letsencrypt
+        - traefik.http.routers.ips-gym.tls.certresolver=letsencryptresolver
         - traefik.http.services.ips-gym.loadbalancer.server.port=80
 
 networks:
