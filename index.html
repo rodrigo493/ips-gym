@@ -337,10 +337,62 @@ section { position: relative; z-index: 1; }
 .reveal { opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease; }
 .reveal.on { opacity:1; transform:translateY(0); }
 
+/* ── COMPAT ── */
+.compat {
+  padding: 100px 72px;
+  border-top: 1px solid var(--bd);
+  background: linear-gradient(135deg, rgba(34,211,238,0.04) 0%, transparent 60%);
+  position: relative;
+  overflow: hidden;
+}
+.compat::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  opacity: .4;
+}
+.compat-inner { max-width: 900px; }
+.compat-label {
+  font-family: var(--fm); font-size: 11px;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: var(--cyan); margin-bottom: 24px;
+  display: flex; align-items: center; gap: 10px;
+}
+.compat-label::before {
+  content: ''; width: 24px; height: 1px; background: var(--cyan);
+}
+.compat-title {
+  font-family: var(--fd);
+  font-size: clamp(40px, 5.5vw, 80px);
+  line-height: .95; margin-bottom: 28px;
+}
+.compat-title em { font-style: normal; color: var(--cyan); }
+.compat-body {
+  font-size: 18px; color: var(--txm); line-height: 1.7;
+  max-width: 680px; margin-bottom: 56px;
+}
+.compat-body strong { color: var(--tx); }
+.compat-items {
+  display: flex; gap: 2px; flex-wrap: wrap;
+}
+.compat-item {
+  background: var(--bgc); border: 1px solid var(--bd);
+  padding: 24px 32px;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  transition: border-color .3s;
+  min-width: 120px;
+}
+.compat-item:hover { border-color: var(--cyan); }
+.ci-icon { font-size: 28px; }
+.ci-label { font-family: var(--fm); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--txm); }
+.compat-item-plus { background: rgba(34,211,238,0.05); border-color: rgba(34,211,238,0.2); }
+.compat-item-plus .ci-icon { font-size: 22px; color: var(--cyan); font-family: var(--fd); }
+.compat-item-plus .ci-label { color: var(--cyan); }
+
 /* ── RESPONSIVE ── */
 @media (max-width: 1024px) {
   .hero { padding: 60px 40px; }
-  .problem, .solution, .chart-sec, .flow-sec, .biz, .cta { padding: 80px 40px; }
+  .problem, .solution, .chart-sec, .flow-sec, .biz, .cta, .compat { padding: 80px 40px; }
   .layer { grid-template-columns: 60px 1fr; }
   .lfeats, .laccent { display: none; }
   .chart-grid { grid-template-columns: 1fr; gap: 48px; }
@@ -553,6 +605,27 @@ section { position: relative; z-index: 1; }
       <div class="laccent">
         <div class="laccent-text" style="color:var(--txm)"><strong style="color:var(--cyan)">1</strong>painel.<br>∞ unidades.</div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPATIBILIDADE -->
+<section class="compat">
+  <div class="compat-inner reveal">
+    <div class="compat-label">Sem substituir nada</div>
+    <h2 class="compat-title">Funciona com os equipamentos<br>que a sua academia <em>já tem.</em></h2>
+    <p class="compat-body">
+      O IPS usa câmeras para enxergar o movimento — não precisa ser acoplado a nenhum aparelho.
+      Esteira, bicicleta, rack, halteres, cabo, leg press, qualquer equipamento de qualquer marca.
+      A câmera vai na parede. O sistema começa a funcionar no mesmo dia.
+    </p>
+    <div class="compat-items">
+      <div class="compat-item"><div class="ci-icon">🏋️</div><div class="ci-label">Musculação</div></div>
+      <div class="compat-item"><div class="ci-icon">🚴</div><div class="ci-label">Cardio</div></div>
+      <div class="compat-item"><div class="ci-icon">🤸</div><div class="ci-label">Funcional</div></div>
+      <div class="compat-item"><div class="ci-icon">🧘</div><div class="ci-label">Pilates</div></div>
+      <div class="compat-item"><div class="ci-icon">🥊</div><div class="ci-label">Luta</div></div>
+      <div class="compat-item compat-item-plus"><div class="ci-icon">+</div><div class="ci-label">Qualquer outro</div></div>
     </div>
   </div>
 </section>
