@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  ips-gym:
+    image: ips-gym:latest
+    networks:
+      - Rodrigo
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=Rodrigo
+        - traefik.http.routers.ips-gym.rule=Host(`ipsbiomecanic.liveuni.com.br`)
+        - traefik.http.routers.ips-gym.entrypoints=websecure
+        - traefik.http.routers.ips-gym.tls=true
+        - traefik.http.routers.ips-gym.tls.certresolver=letsencrypt
+        - traefik.http.services.ips-gym.loadbalancer.server.port=80
+
+networks:
+  Rodrigo:
+    external: true
