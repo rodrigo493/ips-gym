@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>IPS — Diagrama de Blocos (A4)</title>
+<style>
+  @page { size: A4 landscape; margin: 1.5cm; }
+  @media print { body { margin: 0; } .no-print { display: none; } }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Arial, sans-serif;
+    background: #fff;
+    width: 277mm; /* A4 landscape */
+    min-height: 190mm;
+    padding: 10mm;
+  }
+
+  /* HEADER */
+  .header {
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 2px solid #10346A; padding-bottom: 6px; margin-bottom: 10px;
+  }
+  .header-title { font-size: 13pt; font-weight: bold; color: #10346A; }
+  .header-sub { font-size: 8pt; color: #555; }
+  .header-meta { text-align: right; font-size: 8pt; color: #555; }
+
+  /* GRID PRINCIPAL */
+  .diagram {
+    display: grid;
+    grid-template-columns: 48mm 8mm 48mm 8mm 48mm 8mm 48mm 8mm 48mm;
+    grid-template-rows: auto 8mm auto 8mm auto;
+    align-items: center;
+    gap: 0;
+    margin-top: 4mm;
+  }
+
+  /* BLOCOS */
+  .bloco {
+    border: 1.5px solid #10346A;
+    border-radius: 3px;
+    padding: 5px 7px;
+    background: #F0F5FF;
+    text-align: center;
+    font-size: 7.5pt;
+    position: relative;
+  }
+  .bloco-num {
+    position: absolute; top: -1px; left: 4px;
+    font-size: 6pt; color: #10346A; font-weight: bold;
+  }
+  .bloco-title {
+    font-weight: bold; font-size: 7.5pt;
+    color: #10346A; margin-bottom: 2px; margin-top: 6px;
+  }
+  .bloco-sub { font-size: 6.5pt; color: #444; line-height: 1.3; }
+
+  /* Variantes de cor */
+  .bloco-cam  { background: #E8F4E8; border-color: #2D7A2D; }
+  .bloco-cam .bloco-title { color: #2D7A2D; }
+  .bloco-ai   { background: #EEF0FF; border-color: #3344AA; }
+  .bloco-ai .bloco-title { color: #3344AA; }
+  .bloco-out  { background: #FFF8E8; border-color: #B8860B; }
+  .bloco-out .bloco-title { color: #B8860B; }
+  .bloco-iot  { background: #FFF0F0; border-color: #CC3333; }
+  .bloco-iot .bloco-title { color: #CC3333; }
+  .bloco-dash { background: #F0FFF0; border-color: #227722; }
+  .bloco-dash .bloco-title { color: #227722; }
+  .bloco-app  { background: #FFF5FF; border-color: #882288; }
+  .bloco-app .bloco-title { color: #882288; }
+
+  /* SETAS */
+  .seta {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14pt; color: #10346A; font-weight: bold;
+  }
+  .seta-down {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14pt; color: #10346A; font-weight: bold;
+  }
+
+  /* ROW 3 (segunda linha) */
+  .row2 {
+    display: grid;
+    grid-template-columns: 48mm 8mm 48mm 8mm 48mm;
+    align-items: center;
+    margin-top: 3mm;
+  }
+
+  /* LAYOUT MANUAL */
+  .container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* Linha 1: B1 → B2 → B3 → B4 → B5 */
+  .linha { display: flex; align-items: center; gap: 0; margin-bottom: 0; }
+  .linha .bloco { flex: 0 0 44mm; }
+  .linha .seta  { flex: 0 0 10mm; font-size: 16pt; }
+
+  /* Espaço entre linhas */
+  .gap { height: 6mm; display: flex; align-items: center; }
+
+  /* Seta vertical centralizada */
+  .vert-arrows {
+    display: flex;
+    justify-content: space-around;
+    padding: 0 22mm;
+  }
+  .vert-arrow { font-size: 14pt; color: #10346A; text-align: center; }
+
+  /* Linha 2: B9 → B8 → B7 → B6 */
+  .linha-inv { display: flex; align-items: center; gap: 0; flex-direction: row-reverse; }
+  .linha-inv .bloco { flex: 0 0 44mm; }
+  .linha-inv .seta  { flex: 0 0 10mm; font-size: 16pt; transform: scaleX(-1); }
+
+  /* Linha 3: B10, B11 */
+  .linha3 { display: flex; align-items: flex-start; gap: 8mm; margin-top: 3mm; padding: 0 1mm; }
+  .linha3 .bloco { flex: 0 0 60mm; }
+
+  /* Legend */
+  .legend {
+    margin-top: 6mm; border-top: 1px solid #ccc; padding-top: 4mm;
+    display: flex; gap: 8mm; flex-wrap: wrap;
+  }
+  .leg-item { display: flex; align-items: center; gap: 4px; font-size: 7pt; color: #333; }
+  .leg-box { width: 12px; height: 12px; border: 1.5px solid; border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="header-title">IPS — INTELLIGENT PERFORMANCE SYSTEM</div>
+    <div class="header-sub">Diagrama de Blocos Funcional — Pedido de Patente INPI</div>
+  </div>
+  <div class="header-meta">
+    Live Equipamentos Ltda.<br>
+    Rodrigo Siqueira — Inventor<br>
+    Junho / 2026
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- LINHA 1: B1 → B2 → B3 → B4 → B5 -->
+  <div class="linha">
+    <div class="bloco bloco-cam">
+      <div class="bloco-num">1</div>
+      <div class="bloco-title">CÂMERAS</div>
+      <div class="bloco-sub">Captura de vídeo<br>≥25fps | HD 1280×720<br>USB / Ethernet / Wi-Fi</div>
+    </div>
+    <div class="seta">→</div>
+    <div class="bloco bloco-ai">
+      <div class="bloco-num">2</div>
+      <div class="bloco-title">PROCESSAMENTO CENTRAL</div>
+      <div class="bloco-sub">NVIDIA Jetson Orin NX 16GB<br>100 TOPS | GPU CUDA<br>Coordena todos os blocos</div>
+    </div>
+    <div class="seta">→</div>
+    <div class="bloco bloco-ai">
+      <div class="bloco-num">3</div>
+      <div class="bloco-title">ESTIMAÇÃO DE POSE</div>
+      <div class="bloco-sub">RTMPose-l | ONNX Runtime<br>133 keypoints COCO-WholeBody<br>Multi-pessoa simultâneo</div>
+    </div>
+    <div class="seta">→</div>
+    <div class="bloco bloco-ai">
+      <div class="bloco-num">4</div>
+      <div class="bloco-title">CÁLCULO DE ÂNGULOS</div>
+      <div class="bloco-sub">Joelho / Quadril / Tornozelo<br>Cotovelo / Tronco / Simetria<br>Precisão: 0,01°</div>
+    </div>
+    <div class="seta">→</div>
+    <div class="bloco bloco-ai">
+      <div class="bloco-num">5</div>
+      <div class="bloco-title">MOTOR DE REGRAS</div>
+      <div class="bloco-sub">Avaliação biomecânica<br>Limites por exercício/aluno<br>Debounce 4s | Severidade</div>
+    </div>
+  </div>
+
+  <!-- SETAS VERTICAIS DE LIGAÇÃO -->
+  <div class="gap">
+    <div style="display:flex; width:100%; justify-content: space-between; padding: 0 109mm 0 0;">
+      <!-- B2 desce para B9 (abaixo) via coluna IoT -->
+      <div></div>
+      <div style="font-size:14pt; color:#CC3333; text-align:center; margin-left:52mm">↓</div>
+      <div></div>
+    </div>
+    <div style="display:flex; width:100%; margin-top:-20px;">
+      <div style="flex:1"></div>
+      <div style="font-size:14pt; color:#B8860B; flex:0 0 10mm; text-align:center; margin-left:98mm">↓</div>
+      <div style="flex:1"></div>
+    </div>
+  </div>
+
+  <!-- LINHA 2 (invertida): B9 ← B8 ← B7 ← B6 (de baixo do B5) -->
+  <div class="linha">
+    <div class="bloco bloco-iot">
+      <div class="bloco-num">9</div>
+      <div class="bloco-title">SENSORES IoT</div>
+      <div class="bloco-sub">ESP32 | Acelerômetro<br>Temperatura NTC | Hall<br>Manutenção preventiva</div>
+    </div>
+    <div class="seta">→</div>
+    <div class="bloco bloco-dash">
+      <div class="bloco-num">8</div>
+      <div class="bloco-title">SMART FLOOR</div>
+      <div class="bloco-sub">Mapa de ocupação<br>Treino adaptativo<br>Notifica Bloco 10</div>
+    </div>
+    <div class="seta">→</div>
+    <div class="bloco bloco-out">
+      <div class="bloco-num">7</div>
+      <div class="bloco-title">PRONTUÁRIO CORPORAL</div>
+      <div class="bloco-sub">Histórico biomecânico<br>Gráficos de evolução<br>Alertas de estagnação</div>
+    </div>
+    <div class="seta">→</div>
+    <div class="bloco bloco-out">
+      <div class="bloco-num">6</div>
+      <div class="bloco-title">COACH DE VOZ</div>
+      <div class="bloco-sub">TTS offline | Thread async<br>Correção em linguagem natural<br>Latência &lt;200ms</div>
+    </div>
+    <div class="seta">←</div>
+    <div style="flex:0 0 44mm; display:flex; align-items:center; justify-content:center;">
+      <div style="font-size:8pt; color:#888; text-align:center; border: 1px dashed #ccc; padding:4px 8px; border-radius:3px;">
+        ↑ alerta do Bloco 5
+      </div>
+    </div>
+  </div>
+
+  <!-- SETAS PARA LINHA 3 -->
+  <div class="gap" style="height:5mm;">
+    <div style="display:flex; width:100%; padding:0 2mm;">
+      <div style="flex:0 0 22mm; text-align:center; font-size:12pt; color:#882288;">↓</div>
+      <div style="flex:1"></div>
+      <div style="flex:0 0 22mm; text-align:center; font-size:12pt; color:#CC3333; margin-right: 79mm;">↓</div>
+    </div>
+  </div>
+
+  <!-- LINHA 3: B10 + B11 -->
+  <div style="display:flex; gap: 6mm;">
+    <div class="bloco bloco-app" style="flex: 0 0 72mm;">
+      <div class="bloco-num">10</div>
+      <div class="bloco-title">APP MÓVEL DO PRATICANTE</div>
+      <div class="bloco-sub">
+        Programa de treino do dia · Equipamentos disponíveis<br>
+        Substituições automáticas (Bloco 8) · Prontuário individual<br>
+        Comunicação: WebSocket / HTTPS com Bloco 2
+      </div>
+    </div>
+    <div class="bloco bloco-dash" style="flex: 0 0 72mm; margin-left: 42mm">
+      <div class="bloco-num">11</div>
+      <div class="bloco-title">DASHBOARD DE GESTÃO</div>
+      <div class="bloco-sub">
+        Mapa de ocupação em tempo real · Indicadores de funcionários<br>
+        Alertas de manutenção (Bloco 9) · Relatórios biomecânicos<br>
+        Visão centralizada para redes com múltiplas unidades
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- LEGENDA -->
+<div class="legend">
+  <div class="leg-item"><div class="leg-box" style="background:#E8F4E8;border-color:#2D7A2D"></div>Hardware de captura</div>
+  <div class="leg-item"><div class="leg-box" style="background:#EEF0FF;border-color:#3344AA"></div>Módulos de IA / Processamento</div>
+  <div class="leg-item"><div class="leg-box" style="background:#FFF8E8;border-color:#B8860B"></div>Saída / Registro</div>
+  <div class="leg-item"><div class="leg-box" style="background:#FFF0F0;border-color:#CC3333"></div>Sensores IoT</div>
+  <div class="leg-item"><div class="leg-box" style="background:#F0FFF0;border-color:#227722"></div>Gestão de espaço / Dashboard</div>
+  <div class="leg-item"><div class="leg-box" style="background:#FFF5FF;border-color:#882288"></div>Interface do praticante</div>
+  <div class="leg-item" style="margin-left:auto; font-size:7pt; color:#999;">→ Fluxo de dados em tempo real</div>
+</div>
+
+<div class="no-print" style="margin-top:16px; text-align:center;">
+  <button onclick="window.print()" style="padding:8px 24px;font-size:13px;background:#10346A;color:#fff;border:none;border-radius:4px;cursor:pointer;">
+    🖨️ Imprimir / Salvar PDF (A4 Paisagem)
+  </button>
+</div>
+
+</body>
+</html>
