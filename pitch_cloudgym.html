@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Live × Cloud Gym — Proposta de Parceria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #070A0D;
+  --bg2:       #0D1318;
+  --bgc:       #111820;
+  --bd:        rgba(255,255,255,0.07);
+  --bdb:       rgba(255,255,255,0.14);
+  --gold:      #F0B429;
+  --gold-dim:  rgba(240,180,41,0.12);
+  --cyan:      #22D3EE;
+  --cyan-dim:  rgba(34,211,238,0.1);
+  --green:     #4ADE80;
+  --green-dim: rgba(74,222,128,0.08);
+  --red:       #F87171;
+  --tx:        #EEE9E2;
+  --txm:       #7A8A9A;
+  --txd:       #3A4A5A;
+  --fd: 'Bebas Neue', sans-serif;
+  --fb: 'DM Sans', sans-serif;
+  --fm: 'DM Mono', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--tx);
+  font-family: var(--fb);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none; z-index: 0;
+}
+section { position: relative; z-index: 1; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 80px 72px;
+  position: relative; overflow: hidden;
+}
+.hero-glow {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 55% 50% at 85% 15%, rgba(240,180,41,0.09) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 55% at 5%  85%, rgba(34,211,238,0.07) 0%, transparent 60%);
+}
+.badge-row {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 52px;
+  animation: fadeUp 0.8s ease both;
+}
+.badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 5px 14px 5px 10px;
+  border: 1px solid var(--bdb); border-radius: 3px;
+  font-family: var(--fm); font-size: 11px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--txm); background: rgba(255,255,255,0.03);
+}
+.dot { width:6px; height:6px; border-radius:50%; animation: pulse 2.2s ease infinite; }
+.dot-g { background: var(--green); }
+.dot-c { background: var(--cyan); }
+@keyframes pulse {
+  0%,100% { opacity:1; transform:scale(1); }
+  50%      { opacity:0.4; transform:scale(0.75); }
+}
+.sep { color: rgba(240,180,41,0.4); font-family: var(--fm); font-size:13px; letter-spacing:.2em; margin: 0 4px; }
+.badge-date { margin-left:auto; }
+
+.hero-title {
+  font-family: var(--fd);
+  font-size: clamp(72px, 10vw, 136px);
+  line-height: 0.91; letter-spacing: -0.01em;
+  animation: fadeUp 0.8s 0.1s ease both;
+}
+.hero-title .sub {
+  color: var(--txm); font-size: 0.42em;
+  letter-spacing: .05em; display:block;
+  margin-bottom: 10px; font-family: var(--fm);
+}
+.hero-title .gold { color: var(--gold); }
+.hero-title .muted { color: var(--txm); }
+
+.hero-tagline {
+  margin-top: 44px;
+  font-size: clamp(17px, 2.2vw, 26px);
+  font-weight: 300; color: var(--txm);
+  max-width: 620px; line-height: 1.45;
+  animation: fadeUp 0.8s 0.2s ease both;
+}
+.hero-tagline strong { color: var(--tx); font-weight: 500; }
+
+.hero-stats {
+  display: flex; gap: 56px; margin-top: 64px;
+  animation: fadeUp 0.8s 0.3s ease both;
+}
+.hstat { display:flex; flex-direction:column; gap:4px; }
+.hstat-n { font-family:var(--fd); font-size:52px; color:var(--gold); line-height:1; }
+.hstat-l { font-family:var(--fm); font-size:11px; color:var(--txm); text-transform:uppercase; letter-spacing:.08em; }
+
+.cam-bg {
+  position:absolute; right:0; top:0;
+  width:42%; height:100%;
+  display:grid; grid-template-columns:repeat(8,1fr);
+  grid-template-rows:repeat(10,1fr);
+  pointer-events:none; opacity:.55;
+}
+.cdot { display:flex; align-items:center; justify-content:center; }
+.cdot::after {
+  content:''; width:2px; height:2px; border-radius:50%;
+  background:var(--cyan);
+  animation: cpulse var(--d,3s) var(--delay,0s) ease infinite;
+}
+@keyframes cpulse {
+  0%,85%,100% { opacity:.18; transform:scale(1); }
+  42%          { opacity:1;   transform:scale(2.8); }
+}
+
+/* ── PROBLEM ── */
+.problem { padding:120px 72px; border-top:1px solid var(--bd); }
+.slabel {
+  font-family:var(--fm); font-size:11px; letter-spacing:.15em;
+  text-transform:uppercase; color:var(--txd); margin-bottom:14px;
+}
+.slabel span { color:var(--gold); }
+.section-title {
+  font-family:var(--fd);
+  font-size: clamp(40px, 5.5vw, 76px);
+  line-height:.95; margin-bottom:64px;
+  color:var(--txm);
+}
+.section-title strong { color:var(--tx); }
+.section-title em { font-style:normal; color:var(--gold); }
+.section-title .cyan { color:var(--cyan); }
+.section-title .green { color:var(--green); }
+
+.pcards { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
+.pcard {
+  background:var(--bgc); padding:48px 40px;
+  border:1px solid var(--bd); position:relative; overflow:hidden;
+  transition: border-color .3s;
+}
+.pcard:hover { border-color:var(--bdb); }
+.pcard::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:var(--red); transform:scaleX(0); transform-origin:left;
+  transition: transform .4s ease;
+}
+.pcard:hover::before { transform:scaleX(1); }
+.pnum { font-family:var(--fd); font-size:88px; line-height:1; color:var(--txd); margin-bottom:24px; }
+.pquote { font-size:19px; font-weight:600; color:var(--tx); line-height:1.3; margin-bottom:14px; }
+.psub { font-size:14px; color:var(--txm); line-height:1.55; }
+
+/* ── SOLUTION LAYERS ── */
+.solution { padding:120px 72px; border-top:1px solid var(--bd); background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%); }
+.sol-head {
+  display:flex; justify-content:space-between; align-items:flex-end;
+  margin-bottom:72px;
+}
+.sol-note { max-width:260px; font-size:14px; color:var(--txm); text-align:right; line-height:1.6; }
+
+.layers { display:flex; flex-direction:column; gap:2px; }
+.layer {
+  display:grid; grid-template-columns:72px 1fr 1fr 260px;
+  background:var(--bgc); border:1px solid var(--bd);
+  align-items:stretch; transition:border-color .3s;
+}
+.layer:hover { border-color:var(--bdb); }
+.lnum {
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--fm); font-size:11px; color:var(--txd);
+  border-right:1px solid var(--bd);
+}
+.lmain { padding:36px 40px; border-right:1px solid var(--bd); }
+.licon { font-size:22px; margin-bottom:12px; }
+.lname { font-family:var(--fd); font-size:30px; line-height:1; margin-bottom:8px; }
+.ldesc { font-size:14px; color:var(--txm); line-height:1.5; }
+.lfeats {
+  padding:36px 40px; border-right:1px solid var(--bd);
+  display:flex; flex-direction:column; gap:10px; justify-content:center;
+}
+.lfeat {
+  display:flex; align-items:flex-start; gap:10px;
+  font-size:13px; color:var(--txm); line-height:1.4;
+}
+.lfeat::before { content:'→'; color:var(--gold); font-family:var(--fm); flex-shrink:0; margin-top:1px; }
+.laccent {
+  display:flex; align-items:center; justify-content:center;
+  padding:36px 28px; text-align:center;
+}
+.laccent-text { font-family:var(--fd); font-size:18px; line-height:1.2; color:var(--txm); }
+.laccent-text strong {
+  display:block; font-family:var(--fd);
+  font-size:40px; line-height:1; color:var(--gold); margin-bottom:4px;
+}
+
+/* ── CHART ── */
+.chart-sec { padding:120px 72px; border-top:1px solid var(--bd); }
+.chart-grid { display:grid; grid-template-columns:1fr 1fr; gap:88px; align-items:center; }
+.chart-eyebrow { font-family:var(--fm); font-size:11px; letter-spacing:.15em; text-transform:uppercase; color:var(--gold); margin-bottom:24px; }
+.chart-title { font-family:var(--fd); font-size:clamp(44px,5vw,80px); line-height:.93; margin-bottom:32px; }
+.chart-body { font-size:16px; color:var(--txm); line-height:1.7; max-width:460px; }
+.chart-body strong { color:var(--tx); font-weight:500; }
+.chart-kpis { display:flex; gap:40px; margin-top:40px; }
+.kpi { display:flex; flex-direction:column; gap:4px; }
+.kpi-v { font-family:var(--fd); font-size:44px; line-height:1; color:var(--green); }
+.kpi-l { font-family:var(--fm); font-size:11px; color:var(--txm); text-transform:uppercase; letter-spacing:.06em; }
+
+.chart-box {
+  background:var(--bgc); border:1px solid var(--bd);
+  border-radius:2px; padding:36px 40px;
+}
+.chart-box-title { font-family:var(--fm); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--txd); margin-bottom:28px; }
+.chart-box-title span { color:var(--txm); }
+
+/* SVG path animation */
+.cpath { stroke-dasharray:900; stroke-dashoffset:900; transition:stroke-dashoffset 2.2s cubic-bezier(.4,0,.2,1); }
+.cpath.on { stroke-dashoffset:0; }
+.cfill { opacity:0; transition:opacity 1s 0.5s ease; }
+.cfill.on { opacity:1; }
+.cdot2 { opacity:0; transition:opacity 0.4s 2s ease; }
+.cdot2.on { opacity:1; }
+
+/* ── FLOW ── */
+.flow-sec { padding:120px 72px; border-top:1px solid var(--bd); background:var(--bg2); }
+.flow-title { font-family:var(--fd); font-size:clamp(44px,5vw,80px); line-height:1; margin-bottom:80px; max-width:680px; }
+.flow-steps {
+  display:grid; grid-template-columns:repeat(5,1fr);
+  gap:0; position:relative;
+}
+.flow-steps::before {
+  content:''; position:absolute;
+  top:31px; left:32px; right:32px; height:1px;
+  background:linear-gradient(90deg,var(--gold),var(--cyan),var(--green));
+  opacity:.25;
+}
+.fstep { padding:0 20px 0 0; position:relative; }
+.fstep-dot {
+  width:64px; height:64px; border-radius:50%;
+  background:var(--bgc); border:1px solid var(--bdb);
+  display:flex; align-items:center; justify-content:center;
+  font-size:22px; margin-bottom:24px; position:relative; z-index:1;
+}
+.fstep-n { font-family:var(--fm); font-size:10px; color:var(--txd); letter-spacing:.1em; text-transform:uppercase; margin-bottom:8px; }
+.fstep-t { font-size:15px; font-weight:600; color:var(--tx); margin-bottom:8px; line-height:1.3; }
+.fstep-b { font-size:13px; color:var(--txm); line-height:1.5; }
+
+/* ── BIZ ── */
+.biz { padding:120px 72px; border-top:1px solid var(--bd); }
+.biz-grid { display:grid; grid-template-columns:1fr 1fr; gap:88px; align-items:start; }
+.biz-tiers { display:flex; flex-direction:column; gap:2px; margin-top:48px; }
+.btier {
+  display:grid; grid-template-columns:156px 1fr 120px;
+  background:var(--bgc); border:1px solid var(--bd); align-items:stretch;
+}
+.btier-name {
+  padding:22px 24px; border-right:1px solid var(--bd);
+  font-family:var(--fm); font-size:11px; text-transform:uppercase;
+  letter-spacing:.07em; color:var(--txm); display:flex; align-items:center; line-height:1.4;
+}
+.btier-feats {
+  padding:22px 24px; font-size:13px; color:var(--txm);
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  border-right:1px solid var(--bd);
+}
+.btier-feats span { color:var(--tx); font-weight:500; }
+.btier-owner {
+  padding:22px 20px;
+  font-family:var(--fm); font-size:10px; color:var(--txd);
+  display:flex; align-items:center; text-transform:uppercase; letter-spacing:.06em;
+}
+.bnums { display:grid; grid-template-columns:1fr 1fr; gap:2px; }
+.bnum {
+  background:var(--bgc); border:1px solid var(--bd);
+  padding:40px 32px; position:relative; overflow:hidden;
+  transition:border-color .3s;
+}
+.bnum:hover { border-color:var(--bdb); }
+.bnum::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:2px;
+  background:var(--gold); transform:scaleX(0); transform-origin:left;
+  transition:transform .5s ease;
+}
+.bnum:hover::after { transform:scaleX(1); }
+.bnum-big { font-family:var(--fd); font-size:52px; line-height:1; color:var(--gold); margin-bottom:8px; }
+.bnum-sm { font-size:13px; color:var(--txm); line-height:1.45; }
+.bnum-highlight { background:var(--gold-dim); border-color:rgba(240,180,41,0.2); }
+.bnum-highlight .bnum-big { color:var(--gold); }
+
+/* ── CTA ── */
+.cta {
+  padding:120px 72px; border-top:1px solid var(--bd);
+  background:linear-gradient(135deg,var(--bg2) 0%,var(--bg) 100%);
+  text-align:center; position:relative; overflow:hidden;
+}
+.cta::before {
+  content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:700px; height:500px;
+  background:radial-gradient(ellipse,rgba(240,180,41,0.07) 0%,transparent 70%);
+  pointer-events:none;
+}
+.cta-title { font-family:var(--fd); font-size:clamp(56px,8vw,120px); line-height:.9; margin-bottom:28px; position:relative; }
+.cta-title em { font-style:normal; color:var(--gold); }
+.cta-sub { font-size:18px; color:var(--txm); margin-bottom:56px; position:relative; }
+.cta-card {
+  display:inline-flex; flex-direction:column; gap:6px;
+  text-align:left; background:var(--bgc);
+  border:1px solid var(--bdb); padding:32px 52px; position:relative;
+}
+.cta-name { font-weight:600; font-size:18px; color:var(--tx); }
+.cta-role { font-size:12px; color:var(--txm); font-family:var(--fm); letter-spacing:.06em; text-transform:uppercase; }
+.cta-email { font-size:15px; color:var(--cyan); margin-top:8px; text-decoration:none; }
+.cta-email:hover { text-decoration:underline; }
+.footer-bar {
+  margin-top:80px; padding-top:40px; border-top:1px solid var(--bd);
+  display:flex; justify-content:space-between; align-items:center;
+  font-size:11px; color:var(--txd); font-family:var(--fm); letter-spacing:.05em;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(24px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.reveal { opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease; }
+.reveal.on { opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="cam-bg" id="camBg"></div>
+
+  <div class="badge-row">
+    <div class="badge"><div class="dot dot-g"></div>Live Equipamentos</div>
+    <div class="sep">×</div>
+    <div class="badge"><div class="dot dot-c"></div>Cloud Gym</div>
+    <div class="badge badge-date">Proposta de Parceria · Maio 2026</div>
+  </div>
+
+  <h1 class="hero-title">
+    <span class="sub">O corpo do aluno,</span>
+    <span class="gold">em dados.</span><br>
+    <span class="muted">Real time.</span>
+  </h1>
+
+  <p class="hero-tagline">
+    O Cloud Gym gerencia a academia.<br>
+    A Live sabe <strong>o que acontece dentro de cada exercício.</strong><br>
+    São camadas que se completam — nenhuma substitui a outra.
+  </p>
+
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-n">12k</div><div class="hstat-l">Clientes Cloud Gym</div></div>
+    <div class="hstat"><div class="hstat-n">0</div><div class="hstat-l">Concorrentes com isso</div></div>
+    <div class="hstat"><div class="hstat-n">133</div><div class="hstat-l">Pontos do corpo rastreados</div></div>
+  </div>
+</section>
+
+<!-- PROBLEMA -->
+<section class="problem">
+  <div class="slabel reveal"><span>01</span> — O problema que nenhum software de gestão resolve</div>
+  <h2 class="section-title reveal">O software gerencia.<br><strong>O corpo, não.</strong></h2>
+
+  <div class="pcards">
+    <div class="pcard reveal">
+      <div class="pnum">01</div>
+      <div class="pquote">"O aluno cancela porque não vê progresso."</div>
+      <div class="psub">O progresso aconteceu — mas ficou invisível. Nenhum sistema de gestão registra como o corpo evoluiu. O aluno não tem prova. A academia não tem argumento para a renovação.</div>
+    </div>
+    <div class="pcard reveal" style="transition-delay:.1s">
+      <div class="pnum">02</div>
+      <div class="pquote">"A máquina ocupada quebra o treino."</div>
+      <div class="psub">O aluno chega com o treino montado, a máquina está em uso, ele improvisa ou desiste. A academia não sabe o que está acontecendo na sala a cada minuto — só no financeiro.</div>
+    </div>
+    <div class="pcard reveal" style="transition-delay:.2s">
+      <div class="pnum">03</div>
+      <div class="pquote">"Você não sabe se o exercício foi bem feito."</div>
+      <div class="psub">O professor não consegue estar em todo lugar. O aluno autodeclara a execução. A academia acumula presença — sem nenhum dado objetivo sobre qualidade de treino.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUÇÃO -->
+<section class="solution">
+  <div class="sol-head">
+    <h2 class="section-title reveal" style="margin-bottom:0">
+      Três camadas.<br>Um produto.<br><em>Integrado.</em>
+    </h2>
+    <div class="sol-note reveal" style="transition-delay:.15s">
+      <div class="slabel"><span>02</span> — A solução</div>
+      Cada camada funciona de forma independente. Juntas, formam um sistema que nenhuma academia no Brasil tem.
+    </div>
+  </div>
+
+  <div class="layers">
+    <!-- Layer I -->
+    <div class="layer reveal">
+      <div class="lnum">I</div>
+      <div class="lmain">
+        <div class="licon">🎥</div>
+        <div class="lname">Smart Floor</div>
+        <div class="ldesc">A sala de musculação gerida por câmeras, em tempo real.</div>
+      </div>
+      <div class="lfeats">
+        <div class="lfeat">Detecta quais aparelhos estão ocupados ou livres a cada segundo</div>
+        <div class="lfeat">Treino do aluno linkado às máquinas disponíveis no horário</div>
+        <div class="lfeat">Máquina ocupada → sistema substitui automaticamente no app</div>
+        <div class="lfeat">Aluno nunca espera. Treino não para.</div>
+      </div>
+      <div class="laccent">
+        <div class="laccent-text"><strong>0s</strong>de espera<br>por máquina</div>
+      </div>
+    </div>
+
+    <!-- Layer II -->
+    <div class="layer reveal" style="transition-delay:.1s">
+      <div class="lnum">II</div>
+      <div class="lmain">
+        <div class="licon">🦾</div>
+        <div class="lname">Análise de Movimento</div>
+        <div class="ldesc">IA rastreia o exercício. Coach de voz corrige na hora.</div>
+      </div>
+      <div class="lfeats">
+        <div class="lfeat">133 pontos do corpo rastreados frame a frame por câmera</div>
+        <div class="lfeat">Detecta erro de postura, ângulo e simetria em tempo real</div>
+        <div class="lfeat">Coach de voz fala a correção imediatamente ao aluno</div>
+        <div class="lfeat">Score de qualidade de execução por exercício, por sessão</div>
+      </div>
+      <div class="laccent">
+        <div class="laccent-text"><strong>133</strong>pontos<br>do corpo</div>
+      </div>
+    </div>
+
+    <!-- Layer III -->
+    <div class="layer reveal" style="transition-delay:.2s">
+      <div class="lnum">III</div>
+      <div class="lmain">
+        <div class="licon">📈</div>
+        <div class="lname">Prontuário Corporal</div>
+        <div class="ldesc">Evolução biomecânica real. Do dia 1 até hoje. Automático.</div>
+      </div>
+      <div class="lfeats">
+        <div class="lfeat">Cada sessão registrada automaticamente — sem o professor medir nada</div>
+        <div class="lfeat">Gráficos de evolução por movimento, articulação e postura</div>
+        <div class="lfeat">Detecção de compliance: o aluno realmente executou ou ficou parado?</div>
+        <div class="lfeat">Alerta ao professor quando aluno estagna — antes do cancelamento</div>
+      </div>
+      <div class="laccent">
+        <div class="laccent-text"><strong>Dia 1</strong>até hoje,<br>sem esforço</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHART -->
+<section class="chart-sec">
+  <div class="chart-grid">
+    <div class="chart-copy reveal">
+      <div class="chart-eyebrow">03 — O dado que retém</div>
+      <h2 class="chart-title">O aluno que vê isso<br><span class="green" style="font-family:var(--fd)">não cancela.</span></h2>
+      <p class="chart-body">
+        Cada sessão na academia gera dados biomecânicos reais. Com o tempo, o aluno vê — com números e gráficos — que seu joelho dobra mais, sua postura melhorou, seus movimentos ficaram mais simétricos.<br><br>
+        <strong>Não é motivação. É prova.</strong> O mesmo argumento que o médico usa para o paciente continuar o tratamento.
+      </p>
+      <div class="chart-kpis">
+        <div class="kpi"><div class="kpi-v">+50°</div><div class="kpi-l">Flexão de joelho / 6 meses</div></div>
+        <div class="kpi"><div class="kpi-v">+107%</div><div class="kpi-l">Score de execução</div></div>
+      </div>
+    </div>
+
+    <div class="chart-box reveal" style="transition-delay:.2s">
+      <div class="chart-box-title">Perfil do aluno — <span>evolução desde o ingresso</span></div>
+      <svg id="echart" viewBox="0 0 440 270" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+        <!-- grid lines v -->
+        <line x1="50" y1="20" x2="50" y2="210" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <line x1="126" y1="20" x2="126" y2="210" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <line x1="202" y1="20" x2="202" y2="210" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <line x1="278" y1="20" x2="278" y2="210" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <line x1="354" y1="20" x2="354" y2="210" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <line x1="430" y1="20" x2="430" y2="210" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <!-- grid lines h -->
+        <line x1="50" y1="210" x2="430" y2="210" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+        <line x1="50" y1="162" x2="430" y2="162" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <line x1="50" y1="115" x2="430" y2="115" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <line x1="50" y1="68"  x2="430" y2="68"  stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <line x1="50" y1="20"  x2="430" y2="20"  stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <!-- Y labels -->
+        <text x="44" y="214" fill="rgba(255,255,255,0.18)" font-size="9" font-family="DM Mono,monospace" text-anchor="end">0°</text>
+        <text x="44" y="166" fill="rgba(255,255,255,0.18)" font-size="9" font-family="DM Mono,monospace" text-anchor="end">40°</text>
+        <text x="44" y="119" fill="rgba(255,255,255,0.18)" font-size="9" font-family="DM Mono,monospace" text-anchor="end">80°</text>
+        <text x="44" y="72"  fill="rgba(255,255,255,0.18)" font-size="9" font-family="DM Mono,monospace" text-anchor="end">120°</text>
+        <text x="44" y="24"  fill="rgba(255,255,255,0.18)" font-size="9" font-family="DM Mono,monospace" text-anchor="end">160°</text>
+        <!-- X labels -->
+        <text x="50"  y="227" fill="rgba(255,255,255,0.18)" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Mês 1</text>
+        <text x="126" y="227" fill="rgba(255,255,255,0.18)" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Mês 2</text>
+        <text x="202" y="227" fill="rgba(255,255,255,0.18)" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Mês 3</text>
+        <text x="278" y="227" fill="rgba(255,255,255,0.18)" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Mês 4</text>
+        <text x="354" y="227" fill="rgba(255,255,255,0.18)" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Mês 5</text>
+        <text x="430" y="227" fill="rgba(255,255,255,0.18)" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Mês 6</text>
+
+        <!-- Area (knee) -->
+        <!-- 78°→y=113, 92°→y=97, 103°→y=84, 113°→y=73, 122°→y=63, 128°→y=57 -->
+        <path class="cfill" id="areaFill"
+          d="M50,113 C80,107 106,99 126,97 C162,91 188,82 202,84 C238,76 258,69 278,73 C310,65 334,61 354,63 C388,57 412,55 430,57 L430,210 L50,210 Z"
+          fill="url(#greenGrad)"/>
+        <defs>
+          <linearGradient id="greenGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#4ADE80" stop-opacity="0.18"/>
+            <stop offset="100%" stop-color="#4ADE80" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Line knee (green) -->
+        <path class="cpath" id="kneeLine"
+          d="M50,113 C80,107 106,99 126,97 C162,91 188,82 202,84 C238,76 258,69 278,73 C310,65 334,61 354,63 C388,57 412,55 430,57"
+          stroke="#4ADE80" stroke-width="2.5" stroke-linecap="round"/>
+
+        <!-- Line score (gold dashed) -->
+        <!-- 40%→y=162, 51%→y=150, 62%→y=138, 72%→y=127, 82%→y=116, 87%→y=110 -->
+        <path class="cpath" id="scoreLine"
+          d="M50,162 C78,157 108,151 126,150 C158,144 184,137 202,138 C238,130 258,124 278,127 C310,119 334,113 354,116 C388,110 412,107 430,110"
+          stroke="#F0B429" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="5,4"/>
+
+        <!-- Milestone mark at mês 5 -->
+        <line x1="354" y1="20" x2="354" y2="63" stroke="rgba(240,180,41,0.35)" stroke-width="1" stroke-dasharray="3,3"/>
+        <text x="354" y="14" fill="rgba(240,180,41,0.6)" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">✦ execução ideal</text>
+
+        <!-- End dots -->
+        <circle class="cdot2" cx="50"  cy="113" r="4" fill="#4ADE80"/>
+        <circle class="cdot2" cx="430" cy="57"  r="5" fill="#4ADE80"/>
+        <circle class="cdot2" cx="50"  cy="162" r="3" fill="#F0B429"/>
+        <circle class="cdot2" cx="430" cy="110" r="4" fill="#F0B429"/>
+
+        <!-- Legend -->
+        <line x1="240" y1="252" x2="258" y2="252" stroke="#4ADE80" stroke-width="2"/>
+        <text x="262" y="256" fill="rgba(255,255,255,0.35)" font-size="9" font-family="DM Mono,monospace">Flexão joelho</text>
+        <line x1="340" y1="252" x2="358" y2="252" stroke="#F0B429" stroke-width="2" stroke-dasharray="4,3"/>
+        <text x="362" y="256" fill="rgba(255,255,255,0.35)" font-size="9" font-family="DM Mono,monospace">Score exec.</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- FLUXO -->
+<section class="flow-sec">
+  <div class="slabel reveal"><span>04</span> — Como funciona na prática</div>
+  <h2 class="flow-title reveal">Do chegar à academia<br>ao dado no histórico.</h2>
+
+  <div class="flow-steps">
+    <div class="fstep reveal">
+      <div class="fstep-dot">📱</div>
+      <div class="fstep-n">01</div>
+      <div class="fstep-t">Aluno chega</div>
+      <div class="fstep-b">App mostra o treino com as máquinas que estão livres agora.</div>
+    </div>
+    <div class="fstep reveal" style="transition-delay:.1s">
+      <div class="fstep-dot">🔄</div>
+      <div class="fstep-n">02</div>
+      <div class="fstep-t">Máquina ocupada</div>
+      <div class="fstep-b">Câmera detecta. Sistema substitui o exercício automaticamente.</div>
+    </div>
+    <div class="fstep reveal" style="transition-delay:.2s">
+      <div class="fstep-dot">🦾</div>
+      <div class="fstep-n">03</div>
+      <div class="fstep-t">IA monitora</div>
+      <div class="fstep-b">Câmera acompanha a execução. Coach de voz corrige em tempo real.</div>
+    </div>
+    <div class="fstep reveal" style="transition-delay:.3s">
+      <div class="fstep-dot">📊</div>
+      <div class="fstep-n">04</div>
+      <div class="fstep-t">Dados registrados</div>
+      <div class="fstep-b">Cada exercício, cada ângulo, cada rep — automático. Sem papel.</div>
+    </div>
+    <div class="fstep reveal" style="transition-delay:.4s">
+      <div class="fstep-dot">📈</div>
+      <div class="fstep-n">05</div>
+      <div class="fstep-t">Histórico vivo</div>
+      <div class="fstep-b">Aluno abre o app e vê mês a mês como seu corpo evoluiu.</div>
+    </div>
+  </div>
+</section>
+
+<!-- NEGÓCIO -->
+<section class="biz">
+  <div class="biz-grid">
+    <div>
+      <div class="slabel reveal"><span>05</span> — Modelo de negócio</div>
+      <h2 class="section-title reveal" style="margin-bottom:0">
+        Simples.<br>Escalável.<br><em>Recorrente.</em>
+      </h2>
+      <div class="biz-tiers reveal" style="transition-delay:.15s">
+        <div class="btier">
+          <div class="btier-name">Tier 1<br>Smart Floor</div>
+          <div class="btier-feats"><span>Ocupação em tempo real</span> · Treino adaptativo · Compliance</div>
+          <div class="btier-owner">Hardware + SaaS</div>
+        </div>
+        <div class="btier">
+          <div class="btier-name">Tier 2<br>Biomecânica</div>
+          <div class="btier-feats"><span>Análise de movimento</span> · Coach de voz · Score</div>
+          <div class="btier-owner">Módulo no app</div>
+        </div>
+        <div class="btier">
+          <div class="btier-name">Tier 3<br>Prontuário</div>
+          <div class="btier-feats"><span>Histórico completo</span> · Gráficos · Alerta churn</div>
+          <div class="btier-owner">Revenue share</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bnums reveal" style="transition-delay:.2s">
+      <div class="bnum">
+        <div class="bnum-big">12k</div>
+        <div class="bnum-sm">academias já na base Cloud Gym. Canal pronto, sem custo de aquisição.</div>
+      </div>
+      <div class="bnum">
+        <div class="bnum-big">10%</div>
+        <div class="bnum-sm">adoção conservadora = 1.200 unidades ativas no primeiro ciclo.</div>
+      </div>
+      <div class="bnum">
+        <div class="bnum-big">R$400</div>
+        <div class="bnum-sm">mensalidade média estimada por academia com o módulo ativo.</div>
+      </div>
+      <div class="bnum bnum-highlight">
+        <div class="bnum-big">R$480k</div>
+        <div class="bnum-sm">MRR potencial com 10% de adoção — dividido entre Live e Cloud Gym.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <h2 class="cta-title reveal">
+    A academia que<br>nunca pede pro<br>
+    <em>aluno esperar.</em>
+  </h2>
+  <p class="cta-sub reveal">Vamos fazer uma demo com dados reais?</p>
+  <div class="cta-card reveal">
+    <div class="cta-name">Rodrigo Siqueira</div>
+    <div class="cta-role">CEO · Live Equipamentos</div>
+    <a href="mailto:rodrigo@liveequipamentos.com.br" class="cta-email">rodrigo@liveequipamentos.com.br</a>
+  </div>
+  <div class="footer-bar reveal">
+    <span>Live Equipamentos · IPS Platform · Patente INPI depositada</span>
+    <span>Maio 2026 · Confidencial</span>
+  </div>
+</section>
+
+<script>
+// Camera dots
+const camBg = document.getElementById('camBg');
+for (let i = 0; i < 80; i++) {
+  const d = document.createElement('div');
+  d.className = 'cdot';
+  d.style.setProperty('--d', (2.5 + Math.random() * 3.5) + 's');
+  d.style.setProperty('--delay', (Math.random() * 5) + 's');
+  camBg.appendChild(d);
+}
+
+// Reveal on scroll
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
+
+// Chart animate on visible
+const chartObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      setTimeout(() => {
+        document.querySelectorAll('.cpath').forEach(p => p.classList.add('on'));
+        document.querySelectorAll('.cfill').forEach(p => p.classList.add('on'));
+        document.querySelectorAll('.cdot2').forEach(p => p.classList.add('on'));
+      }, 200);
+      chartObs.disconnect();
+    }
+  });
+}, { threshold: 0.3 });
+const ec = document.getElementById('echart');
+if (ec) chartObs.observe(ec);
+</script>
+</body>
+</html>
