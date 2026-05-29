@@ -337,6 +337,39 @@ section { position: relative; z-index: 1; }
 .reveal { opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease; }
 .reveal.on { opacity:1; transform:translateY(0); }
 
+/* ── SENSORES ── */
+.sensores {
+  padding: 120px 72px;
+  border-top: 1px solid var(--bd);
+  background: var(--bg2);
+}
+.sens-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+.sens-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+.sens-card {
+  background: var(--bgc);
+  border: 1px solid var(--bd);
+  padding: 28px 24px;
+  transition: border-color .3s;
+}
+.sens-card:hover { border-color: var(--gold); }
+.sens-icon { font-size: 24px; margin-bottom: 12px; }
+.sens-name {
+  font-family: var(--fd);
+  font-size: 20px; line-height: 1;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.sens-desc { font-size: 13px; color: var(--txm); line-height: 1.5; }
+
 /* ── COMPAT ── */
 .compat {
   padding: 100px 72px;
@@ -428,6 +461,12 @@ section { position: relative; z-index: 1; }
   .lname { font-size: 20px; }
   .ldesc { font-size: 13px; }
   .lfeats, .laccent { display: none; }
+
+  /* Sensores */
+  .sens-grid { grid-template-columns: 1fr; gap: 36px; }
+  .sens-cards { grid-template-columns: 1fr 1fr; }
+  .sens-card { padding: 20px 16px; }
+  .sens-name { font-size: 17px; }
 
   /* Compat */
   .compat-body { font-size: 15px; margin-bottom: 32px; }
@@ -623,11 +662,51 @@ section { position: relative; z-index: 1; }
       <div class="lfeats">
         <div class="lfeat">Quantos alunos estão na sala agora, em quais máquinas, há quanto tempo</div>
         <div class="lfeat">Funcionários monitorados: presença, circulação e interação com alunos</div>
-        <div class="lfeat">Alerta automático quando padrão de atendimento cai abaixo do esperado</div>
-        <div class="lfeat">Mesma visão centralizada para redes com dezenas de unidades</div>
+        <div class="lfeat">Sensores nos aparelhos: manutenção preventiva antes da quebra</div>
+        <div class="lfeat">Visão centralizada para redes — mesmo padrão em todas as unidades</div>
       </div>
       <div class="laccent">
         <div class="laccent-text" style="color:var(--txm)"><strong style="color:var(--cyan)">1</strong>painel.<br>∞ unidades.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SENSORES -->
+<section class="sensores">
+  <div class="sens-grid reveal">
+    <div class="sens-copy">
+      <div class="slabel"><span>03</span> — Manutenção inteligente</div>
+      <h2 class="section-title" style="margin-bottom:24px">
+        O aparelho avisa<br>antes de <em>quebrar.</em>
+      </h2>
+      <p style="font-size:16px;color:var(--txm);line-height:1.7;max-width:480px">
+        Sensores instalados nos equipamentos monitoram vibração, temperatura, carga e ciclos de uso.
+        O sistema detecta padrões de desgaste e emite alertas antes da falha —
+        evitando a situação mais frustrante do dono de academia:
+        aparelho quebrado no horário de pico.
+      </p>
+    </div>
+    <div class="sens-cards">
+      <div class="sens-card reveal" style="transition-delay:.05s">
+        <div class="sens-icon">📳</div>
+        <div class="sens-name">Vibração</div>
+        <div class="sens-desc">Detecta rolamentos desgastados e peças soltas antes de causar dano maior</div>
+      </div>
+      <div class="sens-card reveal" style="transition-delay:.1s">
+        <div class="sens-icon">🌡️</div>
+        <div class="sens-name">Temperatura</div>
+        <div class="sens-desc">Motores e correias superaquecendo são sinal de falha iminente</div>
+      </div>
+      <div class="sens-card reveal" style="transition-delay:.15s">
+        <div class="sens-icon">🔢</div>
+        <div class="sens-name">Ciclos de uso</div>
+        <div class="sens-desc">Conta automaticamente quantas reps cada aparelho acumulou desde a última revisão</div>
+      </div>
+      <div class="sens-card reveal" style="transition-delay:.2s">
+        <div class="sens-icon">🔔</div>
+        <div class="sens-name">Alerta preventivo</div>
+        <div class="sens-desc">Notificação para o gestor com dias de antecedência — não depois que o aluno reclamar</div>
       </div>
     </div>
   </div>
